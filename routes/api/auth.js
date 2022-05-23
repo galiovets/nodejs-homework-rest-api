@@ -7,6 +7,7 @@ const {
   updateSubscriptionJoiSchema,
 } = require("../../models/user");
 const { auth } = require("../../middlewares/auth");
+const upload = require("../../middlewares/upload");
 
 const router = express.Router();
 
@@ -23,6 +24,13 @@ router.patch(
   auth,
   validation(updateSubscriptionJoiSchema),
   ctrlWrapper(ctrl.updateSubscription)
+);
+
+router.patch(
+  "/avatars",
+  auth,
+  upload.single("avatar"),
+  ctrlWrapper(ctrl.updateAvatar)
 );
 
 module.exports = router;
